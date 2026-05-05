@@ -1,6 +1,6 @@
 export interface Anggota {
     id: number
-    nama: string
+    name: string
     email: string
     jabatan: string
     department: string

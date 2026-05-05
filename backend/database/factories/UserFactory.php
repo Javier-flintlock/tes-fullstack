@@ -27,7 +27,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->email(), 
-            // 'jabatan' => fake()->jobTitle(),
+            'jabatan' => fake()->randomElement(['Senior Software Engineer', 'Junior Software Engineer', 'Marketing and Comunications Executive', 'Financial Operations Officer']),
             'department' => fake()->randomElement(['Technology', 'Marketing', 'Finance']),
             'password' => bcrypt('password'),
         ];

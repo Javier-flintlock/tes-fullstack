@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('jabatan', ['Senior Software Engineer', 'Junior Software Developer', 'Marketing and Comunications Executive', 'Financial Operations Officer'])->nullable();
+            $table->enum('jabatan', ['Senior Software Engineer', 'Junior Software Engineer', 'Marketing and Comunications Executive', 'Financial Operations Officer'])->nullable();
             $table->enum('department', ['Technology', 'Marketing', 'Finance'])->nullable();
             $table->enum('role', ['admin', 'staff'])->default('staff');
             $table->timestamp('email_verified_at')->nullable();

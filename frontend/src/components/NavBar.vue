@@ -52,8 +52,7 @@
                 <div class="flex items-center gap-3">
                     Analytics
                 </div>
-                <span class="w-1.5 h-4 rounded-full bg-gray-900 block ml-auto"
-                    v-show="isActive('/analytics')"></span>
+                <span class="w-1.5 h-4 rounded-full bg-gray-900 block ml-auto" v-show="isActive('/analytics')"></span>
             </RouterLink>
         </nav>
 
@@ -63,8 +62,8 @@
                 <img src="https://api.dicebear.com/7.x/notionists/svg?seed=tiara"
                     class="w-9 h-9 rounded-full bg-orange-200" alt="avatar" />
                 <div class="leading-tight">
-                    <div class="text-sm font-semibold text-gray-900">tiara tiara</div>
-                    <div class="text-xs text-gray-500">tiara@botika.online</div>
+                    <div class="text-sm font-bold text-gray-900">{{ user?.name }}</div>
+                    <div class="text-xs font-medium text-gray-500">{{ user?.email }}</div>
                 </div>
             </div>
 
@@ -86,7 +85,7 @@
             </div>
 
             <!-- Logout -->
-            <button
+            <button @click="logout()"
                 class="flex items-center cursor-pointer gap-2 text-sm text-gray-600 py-1.5 hover:text-gray-900 transition-colors w-full">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                     <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -101,7 +100,12 @@
 
 <script setup lang="ts">
 import router from '@/router';
+import { useAuthStore } from '@/stores/auth';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue'
+
+const { user } = storeToRefs(useAuthStore())
+const { logout } = useAuthStore()
 
 const isDark = ref(false)
 const isActive = (path: string) => router.currentRoute.value.path === path

@@ -36,6 +36,7 @@
 
         <!-- Table -->
         <table class="w-full">
+            <!-- <pre>{{ paginatedData }}</pre> -->
             <thead>
                 <tr class="border-b border-gray-200">
                     <th class="text-left text-sm font-semibold text-gray-900 pb-4 w-20">No</th>
@@ -48,8 +49,8 @@
             <tbody>
                 <tr v-for="(item, index) in paginatedData" :key="item.id"
                     class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td class="py-5 text-sm text-gray-700">{{ (currentPage - 1) * itemsPerPage + index + 1 }}.</td>
-                    <td class="py-5 text-sm text-gray-700">{{ item.nama }}</td>
+                    <td class="py-5 text-sm text-gray-700">{{ (currentPage - 1  ) * itemsPerPage + index + 1 }}.</td>
+                    <td class="py-5 text-sm text-gray-700">{{ item.name }}</td>
                     <td class="py-5 text-sm text-gray-700">{{ item.jabatan }}</td>
                     <td class="py-5 text-sm text-gray-700">{{ item.department }}</td>
                     <td class="py-5">
@@ -138,7 +139,14 @@
                     <!-- Nama -->
                     <div>
                         <label class="text-xs font-medium text-gray-600 mb-1 block">Nama</label>
-                        <input v-model="addForm.nama" type="text" placeholder="Masukkan nama lengkap"
+                        <input v-model="addForm.name" type="text" placeholder="Masukkan nama lengkap"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-gray-400 placeholder-gray-300" />
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label class="text-xs font-medium text-gray-600 mb-1 block">Email</label>
+                        <input v-model="addForm.email" type="email" placeholder="Masukkan alamat email"
                             class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-gray-400 placeholder-gray-300" />
                     </div>
 
@@ -173,6 +181,13 @@
                             </svg>
                         </div>
                     </div>
+
+                    <!-- Password -->
+                    <div>
+                        <label class="text-xs font-medium text-gray-600 mb-1 block">Password</label>
+                        <input v-model="addForm.password" type="password" placeholder="Masukkan kata sandi"
+                            class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-gray-400 placeholder-gray-300" />
+                    </div>
                 </div>
 
                 <div class="flex justify-end gap-2 mt-6">
@@ -180,7 +195,7 @@
                         class="px-4 py-2 text-sm cursor-pointer text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         Batal
                     </button>
-                    <button @click=""
+                    <button @click="confirmAdd(addForm); showAddModal = false"
                         class="px-4 py-2 text-sm cursor-pointer text-white bg-gray-900 rounded-lg hover:bg-gray-700 transition-colors font-medium">
                         Tambah
                     </button>
@@ -191,8 +206,8 @@
 
     <!-- ─── Modal Edit ─── -->
     <Teleport to="body">
-        <div v-if="showEditModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-            @click.self="showEditModal = false">
+        <form v-if="showEditModal" @submit.prevent="saveUpdate(editForm, selectedItem?.id); showEditModal = false"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-black/40" @click.self="showEditModal = false">
             <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
@@ -211,7 +226,7 @@
                     <!-- Nama -->
                     <div>
                         <label class="text-xs font-medium text-gray-600 mb-1 block">Nama</label>
-                        <input v-model="editForm.nama" type="text"
+                        <input v-model="editForm.name" type="text"
                             class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-gray-400" />
                     </div>
 
@@ -253,13 +268,13 @@
                         class="px-4 py-2 text-sm cursor-pointer text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         Batal
                     </button>
-                    <button @click=""
+                    <button
                         class="px-4 py-2 text-sm cursor-pointer text-white bg-gray-900 rounded-lg hover:bg-gray-700 transition-colors font-medium">
                         Simpan
                     </button>
                 </div>
             </div>
-        </div>
+        </form>
     </Teleport>
 
     <!-- ─── Modal Hapus ─── -->
@@ -279,7 +294,7 @@
                 <h2 class="text-base font-semibold text-gray-900 mb-1">Hapus Anggota</h2>
                 <p class="text-sm text-gray-500 mb-6">
                     Apakah kamu yakin ingin menghapus
-                    <span class="font-medium text-gray-800">{{ selectedItem?.nama }}</span>?
+                    <span class="font-medium text-gray-800">{{ selectedItem?.name }}</span>?
                     Tindakan ini tidak dapat dibatalkan.
                 </p>
                 <div class="flex gap-2">
@@ -287,7 +302,7 @@
                         class="flex-1 px-4 py-2 text-sm text-gray-600 border cursor-pointer border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         Batal
                     </button>
-                    <button @click=""
+                    <button @click="confirmDelete(selectedItem?.id); showDeleteModal = false"
                         class="flex-1 px-4 py-2 text-sm text-white bg-red-500 cursor-pointer rounded-lg hover:bg-red-600 transition-colors font-medium">
                         Hapus
                     </button>
@@ -304,36 +319,20 @@ import type { Anggota } from '@/types'
 import { storeToRefs } from 'pinia'
 
 const { getAllUser, confirmAdd, confirmDelete, saveUpdate } = useAuthStore()
-const { user } = storeToRefs(useAuthStore())
+const { data } = storeToRefs(useAuthStore())
 
 // ── Dummy options ──
 const jabatanOptions = [
     'Junior Software Engineer',
     'Senior Software Engineer',
-    'Backend Developer',
-    'Frontend Developer',
-    'DevOps Engineer',
-    'Data Analyst',
-    'Product Designer',
-    'UX Researcher',
-    'Marketing and Communications Executive',
-    'Social Media Manager',
-    'Content Strategist',
-    'Financial Operations Officer',
-    'Accountant',
-    'HR Manager',
-    'Quality Assurance',
-    'Security Engineer',
+    'Marketing and Comunications Executive',
+    'Financial Operations Officer'
 ]
 
 const departmentOptions = [
     'Technology',
     'Marketing',
     'Finance',
-    'HR',
-    'Design',
-    'Operations',
-    'Legal',
 ]
 
 const search = ref('')
@@ -347,8 +346,20 @@ const showEditModal = ref(false)
 const showDeleteModal = ref(false)
 const selectedItem = ref<Anggota | null>(null)
 
-const addForm = ref({ nama: '', jabatan: '', department: '' })
-const editForm = ref({ nama: '', jabatan: '', department: '' })
+const addForm = ref({
+    name: '',
+    jabatan: '',
+    department: '',
+    email: '',
+    password: ''
+})
+const editForm = ref({
+    name: '',
+    jabatan: '',
+    department: '',
+    // email: '',
+    // password: ''
+})
 
 // const allData = ref<Anggota[]>([
 //     { id: 1, nama: 'Daniel Alexander Carter', jabatan: 'Senior Software Engineer', department: 'Technology' },
@@ -368,13 +379,14 @@ const editForm = ref({ nama: '', jabatan: '', department: '' })
 //     { id: 15, nama: 'Benjamin Paul Martinez', jabatan: 'Security Engineer', department: 'Technology' },
 // ])
 
-const filteredData = computed(() =>
-    user.value.filter(d =>
-        d.nama.toLowerCase().includes(search.value.toLowerCase()) ||
-        d.jabatan.toLowerCase().includes(search.value.toLowerCase()) ||
-        d.department.toLowerCase().includes(search.value.toLowerCase())
+const filteredData = computed(() => {
+    if (!Array.isArray(data.value)) return []
+    return data.value.filter(d =>
+        d.name?.toLowerCase().includes(search.value.toLowerCase()) ||
+        d.jabatan?.toLowerCase().includes(search.value.toLowerCase()) ||
+        d.department?.toLowerCase().includes(search.value.toLowerCase())
     )
-)
+})
 
 const totalPages = computed(() => Math.ceil(filteredData.value.length / itemsPerPage.value))
 
@@ -390,15 +402,15 @@ const toggleMenu = (id: number) => {
     openMenu.value = openMenu.value === id ? null : id
 }
 const closeMenu = () => { openMenu.value = null }
-onMounted(() => {
+onMounted(async () => {
     document.addEventListener('click', closeMenu)
-    getAllUser()
+    await getAllUser()
 })
 onUnmounted(() => document.removeEventListener('click', closeMenu))
 
 // ── Tambah ──
 const openAdd = () => {
-    addForm.value = { nama: '', jabatan: '', department: '' }
+    addForm.value = { nama: '', jabatan: '', department: '', email: '', password: '' }
     showAddModal.value = true
 }
 // const saveAdd = () => {
@@ -411,7 +423,7 @@ const openAdd = () => {
 // ── Edit ──
 const openEdit = (item: Anggota) => {
     selectedItem.value = item
-    editForm.value = { nama: item.nama, jabatan: item.jabatan, department: item.department }
+    editForm.value = { name: item.name, jabatan: item.jabatan, department: item.department }
     openMenu.value = null
     showEditModal.value = true
 }
