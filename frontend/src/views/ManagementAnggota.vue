@@ -410,7 +410,7 @@ onUnmounted(() => document.removeEventListener('click', closeMenu))
 
 // ── Tambah ──
 const openAdd = () => {
-    addForm.value = { nama: '', jabatan: '', department: '', email: '', password: '' }
+    addForm.value = { name: '', jabatan: '', department: '', email: '', password: '' }
     showAddModal.value = true
 }
 // const saveAdd = () => {
