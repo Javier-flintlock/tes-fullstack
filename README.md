@@ -120,3 +120,11 @@ Dokumentasi API lengkap tersedia di Postman:
 ## Lisensi
 
 MIT
+
+---
+
+## Catatan
+
+Login menggunakan akun ini
+email: admin@web.id
+password: admin#007
