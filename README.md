@@ -99,6 +99,17 @@ tes-fullstack/
 
 ---
 
+## API Documentation
+
+Dokumentasi API lengkap tersedia di Postman:
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/41516300/2sBXqMGyn9)
+
+🔗 [https://documenter.getpostman.com/view/41516300/2sBXqMGyn9](https://documenter.getpostman.com/view/41516300/2sBXqMGyn9)
+
+---
+
+
 ## Lisensi
 
 MIT
