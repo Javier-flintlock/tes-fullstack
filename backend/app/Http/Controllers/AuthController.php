@@ -13,9 +13,9 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Informasi user', 'data' => $data], 200);
     }
-
+                                                         
     public function users() {
-        $data = User::where('role', '!=', 'admin')->get();
+        $data = User::where('role', '!=', 'admin')->orderBy('name', 'asc')->get();
 
         if(empty($data)) return response()->json(['message'=> 'Belum ada anggota'], 404);
 

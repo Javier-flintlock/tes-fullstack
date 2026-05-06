@@ -1,13 +1,16 @@
 import axiosInstance from "@/lib/axios";
 import router from "@/router";
 import type { Anggota } from "@/types";
-import { defineStore } from "pinia";
+import { defineStore, storeToRefs } from "pinia";
 import { ref } from "vue";
+import { useInventoryStore } from "./inventory";
 
 export const useAuthStore = defineStore('auth', () => {
     const data = ref<Anggota[]>([])
     const user = ref<Anggota | null>(null)
     const isSynced = ref(false)
+
+    const inventory = storeToRefs(useInventoryStore())
 
     const getAllUser = async () => {
         try {
@@ -44,6 +47,8 @@ export const useAuthStore = defineStore('auth', () => {
 
             isSynced.value = false
             user.value = null
+            data.value = []
+            inventory.data.value = []
             localStorage.removeItem('token')
             delete axiosInstance.defaults.headers.common['Authorization']
 

@@ -36,4 +36,8 @@ class User extends Authenticatable
         'department',
         'role'
     ];
+
+    public function inventory() {
+        return $this->hasMany(Inventory::class);
+    }
 }
