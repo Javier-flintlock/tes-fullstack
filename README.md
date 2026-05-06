@@ -82,6 +82,14 @@ tes-fullstack/
 
 ---
 
+## Database Schema
+ 
+Diagram ERD tersedia di dbdiagram.io:
+ 
+🔗 [https://dbdiagram.io/d/Javier-Tes-Full-Stack-06-69fa91d27a923b94722688ab](https://dbdiagram.io/d/Javier-Tes-Full-Stack-06-69fa91d27a923b94722688ab)
+
+---
+
 ## API Endpoints
 
 | Method | Endpoint | Deskripsi |
@@ -108,7 +116,6 @@ Dokumentasi API lengkap tersedia di Postman:
 🔗 [https://documenter.getpostman.com/view/41516300/2sBXqMGyn9](https://documenter.getpostman.com/view/41516300/2sBXqMGyn9)
 
 ---
-
 
 ## Lisensi
 
