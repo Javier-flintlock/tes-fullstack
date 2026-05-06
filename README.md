@@ -126,5 +126,5 @@ MIT
 ## Catatan
 
 Login menggunakan akun ini
-email: admin@web.id
-password: admin#007
+- email: admin@web.id
+- password: admin#007
