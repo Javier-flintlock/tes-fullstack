@@ -15,7 +15,7 @@ export interface Inventaris {
     serial_number: any
     spesifikasi: string
     status: string
-    assign: any
+    user_id: any
     department: string
     user: any
 }

@@ -304,7 +304,7 @@
                         <div>
                             <label class="text-xs font-medium text-teal-600 mb-1 block">Assign</label>
                             <div class="relative">
-                                <select v-model="editForm.user.name"
+                                <select v-model="editForm.user_id"
                                     class="w-full appearance-none border border-teal-200 bg-teal-50/30 rounded-lg px-3 pr-8 py-2 text-sm text-gray-800 focus:outline-none focus:border-teal-400 cursor-pointer">
                                     <option v-for="u in assignOptions" :key="u.id" :value="u.id">{{ u.name }}</option>
                                 </select>

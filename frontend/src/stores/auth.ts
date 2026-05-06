@@ -31,7 +31,7 @@ export const useAuthStore = defineStore('auth', () => {
             const token = res.data?.data.token
             localStorage.setItem('token', token)
 
-            axiosInstance.defaults.headers.common['Authorization'] = `Bearer${token}`
+            axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
             await getUser()
             router.push('/')
@@ -60,11 +60,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     const getUser = async () => {
         try {
-            const res = await axiosInstance.get('/user', {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
-                }
-            })
+            const res = await axiosInstance.get('/user')
 
             user.value = res.data.data
             isSynced.value = true

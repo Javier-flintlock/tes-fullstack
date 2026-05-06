@@ -318,8 +318,9 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import type { Anggota } from '@/types'
 import { storeToRefs } from 'pinia'
 
-const { getAllUser, confirmAdd, confirmDelete, saveUpdate } = useAuthStore()
-const { data } = storeToRefs(useAuthStore())
+const authStore = useAuthStore()
+const { getAllUser, confirmAdd, confirmDelete, saveUpdate } = authStore
+const { data } = storeToRefs(authStore)
 
 // ── Dummy options ──
 const jabatanOptions = [
